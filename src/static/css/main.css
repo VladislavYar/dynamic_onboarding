@@ -1,0 +1,16 @@
+.bg-castom {
+    background-attachment: fixed;
+}
+
+.pg-body-castom {
+    padding-top: 85px;
+}
+
+.shadow-castom {
+    box-shadow: 0 0 20px 10px;
+    max-width: 750px;
+}
+
+.header {
+    min-height: 50px;
+}

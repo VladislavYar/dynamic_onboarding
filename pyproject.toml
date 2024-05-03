@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "dynamic-onboarding-nomia"
+version = "0.1.0"
+description = "Сервис динамического онбординга."
+authors = ["Vladislav Yaremenko <vlad.yaremenko.98@yandex.ru>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^5.0.4"
+psycopg2-binary = "^2.9.9"
+python-dotenv = "^1.0.1"
+pytils = "^0.4.1"
+django-autoslug = "^1.9.9"
+django-widget-tweaks = "^1.5.0"
+djangorestframework = "^3.15.1"
+django-filter = "^24.2"
+drf-spectacular = "^0.27.2"
+
+
+[tool.poetry.group.dev.dependencies]
+isort = "^5.13.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,23 @@
+{% load widget_tweaks %}
+
+
+<form method="post" action="{% url 'users:login' %}">
+    {% csrf_token %}
+    <h1 class="text-center">Добро пожаловать!</h1>
+    <div class="text-center">Введите адрес электронной почты и пароль для входа или регистрации</div>
+    <hr>
+    {% for field in login_form %}
+        <div class="mb-3">
+            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+            {{ field|attr:"class:form-control" }}
+            <div class="text-danger mt-2">
+                {% if field.name == 'username' %}
+                    {{ form.email.errors }}
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+    <div class="text-center mt-2">
+        <input class="btn btn-outline-success" type="submit" value="Войти">
+    </div>
+</form>
