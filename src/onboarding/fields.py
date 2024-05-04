@@ -10,6 +10,6 @@ class CastomChoiceField(ChoiceField):
 
 
 class CastomMultipleChoiceField(MultipleChoiceField):
-    """Кастомное поле множественного выбора выбора."""
+    """Кастомное поле множественного выбора."""
 
     widget = CheckboxSelectMultiple

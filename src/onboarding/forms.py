@@ -95,7 +95,7 @@ class OnboardingForm(forms.Form):
         return surveys_user_status, surveys_data, callback_surveys
 
     def save(self, user: User, main_survey: Survey) -> None:
-        """Сахраняет данные в БД."""
+        """Сохраняет данные в БД."""
         surveys_user_status, surveys_data, callback_surveys = (
             self._serializes_data(user, main_survey)
             )
