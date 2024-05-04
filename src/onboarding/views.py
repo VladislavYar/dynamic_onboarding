@@ -27,20 +27,17 @@ class OnboardingView(View):
         first_survey_user_status = survey_user_status.first()
         if not first_survey_user_status:
             return (main_survey.main_survey,)
-        exclude_survey = (
-                    first_survey_user_status.callback_surveys.
-                    values_list('id', flat=True)
-                    )
+
+        callback_surveys = SurveyUserStatus.objects.filter(
+            id__in=survey_user_status.values_list('pk', flat=True)[1:]
+            ).values_list('callback_surveys', flat=True)
         completed_surveys = list(
             Survey.objects.filter(
-                id__in=survey_user_status.values_list(
-                                            'callback_surveys',
-                                            flat=True,
-                                            )
-                ).exclude(id__in=exclude_survey).values_list(
+                id__in=callback_surveys
+                ).values_list(
                     'id', flat=True
                     )
-        )
+            )
         completed_surveys.append(main_survey.main_survey.id)
         return first_survey_user_status.callback_surveys.all().exclude(
                                                 id__in=completed_surveys

@@ -1,5 +1,6 @@
 import json
 
+from django.db.models import Model
 from django.contrib import admin
 from django.core.handlers.wsgi import WSGIRequest
 from django.utils.html import format_html
@@ -21,19 +22,19 @@ class BaseModel(admin.ModelAdmin):
 class ProtectionAddDeleteBaseModel(admin.ModelAdmin):
     """Базовая модель запрета добавления и редактирования"""
 
-    # def has_add_permission(
-    #         self, request: WSGIRequest,
-    #         obj: Model | None = None,
-    #         ) -> bool:
-    #     """Запрещает добавление объекта."""
-    #     return False
+    def has_add_permission(
+        self, request: WSGIRequest,
+        obj: Model | None = None,
+         ) -> bool:
+        """Запрещает добавление объекта."""
+        return False
 
-    # def has_delete_permission(
-    #         self, request: WSGIRequest,
-    #         obj: Model | None = None,
-    #         ) -> bool:
-    #     """Запрещает удаление объекта."""
-    #     return False
+    def has_delete_permission(
+        self, request: WSGIRequest,
+        obj: Model | None = None,
+         ) -> bool:
+        """Запрещает удаление объекта."""
+        return False
 
 
 @admin.register(SurveyUserStatus)

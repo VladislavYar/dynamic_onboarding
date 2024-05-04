@@ -1,28 +1,43 @@
-# Команды для dev
-clear-volumes-dev: # Удаление Volumes
-	docker compose -f ./infra/docker-compose.dev.yml --env-file ./infra/.env down --volumes
+ifdef OS
+   command = python
+else
+   command = python3
+endif
 
-start-containers-dev: # Запуск контейнеров
-	docker compose -f ./infra/docker-compose.dev.yml --env-file ./infra/.env up -d;
+clear-volumes: # Удаление Volumes
+	docker compose -f ./infra/docker-compose.yml --env-file ./infra/.env down --volumes
+
+start-containers-init: # Запуск контейнеров при инициализации
+	docker compose -f ./infra/docker-compose.yml --env-file ./infra/.env up -d;
 	@sleep 3;
 
-start-server-dev: # Запуск сервера
-	python src/manage.py runserver
+start-containers-start: # Запуск контейнеров при старте
+	docker compose -f ./infra/docker-compose-start.yml --env-file ./infra/.env up -d;
+	@sleep 3;
 
-add-db-test-data-dev: # Добавление тестовых данных в БД
-	python src/manage.py test_data
+start-server: # Запуск сервера
+	$(command) src/manage.py runserver 0.0.0.0:8000
 
-migrate-dev: # Выполнить миграции Django
-	python src/manage.py migrate
+migrate: # Выполнить миграции Django
+	$(command) src/manage.py migrate
 
-createsuperuser-dev: # Создать супер пользователя
-	python src/manage.py createsuperuser --noinput
+createsuperuser: # Создать супер пользователя
+	$(command) src/manage.py createsuperuser --noinput
 
-project-init-dev: # Инициализировать проект
-	make clear-volumes-dev start-containers-dev migrate-dev createsuperuser-dev add-db-test-data-dev start-server-dev
+test-data: # Создаёт тестовые данные
+	$(command) src/manage.py test_data
 
-project-start-dev: # Запустить проект
-	make start-containers-dev start-server-dev
+project-init: # Инициализировать проект
+	make clear-volumes start-containers-init
 
-containers-stop-dev: # Остановить контейнеры
-	docker compose -f ./infra/docker-compose.dev.yml  --env-file .env down;
+project-start: # Запустить проект
+	make start-containers-start
+
+project-stop: # Остановить контейнеры
+	docker compose -f ./infra/docker-compose.yml  --env-file ./infra/.env down;
+
+project-init-in-container: # Инициализировать проект в контейнере
+	make migrate createsuperuser test-data start-server
+
+project-start-in-container: # Запустить проект в контейнере
+	make start-server
