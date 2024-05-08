@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>dynamic_onboarding_nomia</h1>
+  <h1>dynamic_onboarding</h1>
   <h3>Описание</h3>
   <p>Сервис динамического формирования онбординга, сбора статистики и вывода её через RestAPI.</p>
   <hr>
